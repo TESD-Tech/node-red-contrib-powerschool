@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType('powerschool-client',{
+        category: 'config',
+        defaults: {
+            name: {value: ""},
+            powerschool_host: {value: ""},
+            client_id: {value: ""},
+            client_secret: {value: ""},
+            ssl_reject: {value: false },
+            //access_token: {value: ""},
+            //access_token_expiry: {value: ""}
+        },
+        label: function() {
+            return this.name;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="powerschool-client">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-powerschool_host"><i class="fa fa-lock"></i> PowerSchool Host Name</label>
+        <input type="text" id="node-config-input-powerschool_host" placeholder="e.g. powerschool.yourschool.edu">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-client_id"><i class="fa fa-lock"></i> Client ID</label>
+        <input type="password" id="node-config-input-client_id">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-client_secret"><i class="fa fa-lock"></i> Client Secret</label>
+        <input type="password" id="node-config-input-client_secret">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-ssl_reject"><i class="fa fa-lock"></i> SSL rejectUnauthorized (true or false)</label>
+        <input type="text" id="node-config-input-ssl_reject">
+    </div>
+</script>

@@ -1,0 +1,122 @@
+
+<script type="text/x-red" data-template-name="powerschool-request">
+
+    <div class="form-row">
+        <label for="node-input-url">URL</label>
+        <input type="text" id="node-input-url" placeholder="Defaults to msg.url">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-method">Method</label>
+        <input type="text" id="node-input-method" placeholder="Defaults to msg.method || POST">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-property"><i class="fa fa-ellipsis-h"></i> <span>Payload</span></label>
+        <input type="text" id="node-input-property" style="width: 70%"/>
+        <input type="hidden" id="node-input-outputs"/>
+    </div>
+    
+    <!-- By convention, most nodes have a 'name' property. The following div -->
+    <!-- provides the necessary field. Should always be the last option      -->
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        
+    </div>
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="powerschool-request">
+
+    <h3>About</h3>
+    <p>Sends PowerSchool API requests</p>
+
+    <h3>Examples with Payloads</h3>
+        <p>
+            <h5>Update the email address for student ID 1</h5>
+            <div>url: https://<span class="powerschool-host">your.powerschool.url</span>/ws/v1/student</div>
+            <div>method: POST</div>
+            <div>payload: {<br>
+                <span style="padding-left: 10px;">"students": {</span><br>
+                    <span style="padding-left: 20px;">"student": [{</span><br>
+                        <span style="padding-left: 30px;">"id": "1",</span><br>
+                        <span style="padding-left: 30px;">"client_uid": "1",</span><br>
+                        <span style="padding-left: 30px;">"action": "UPDATE",</span><br>
+                        <span style="padding-left: 30px;">"contact_info": {</span><br>
+                            <span style="padding-left: 40px;">"email": "new_student_email@yourdomain.edu"</span><br>
+                        <span style="padding-left: 30px;">}</span><br>
+                    <span style="padding-left: 20px;">}]</span><br>
+                <span style="padding-left: 10px;">}</span><br>
+            }<br></div>
+
+        </p>
+        <p>
+            <h5>Update custom field "schoology_access_code" in student table extension U_DEF_EXT_STUDENTS for student ID 1</h5>
+            <div>url: https://<span class="powerschool-host">your.powerschool.url</span>/ws/schema/table/u_def_ext_students/{{student's DCID goes here}}</div>
+            <div>method: POST</div>
+            <div>payload: {<br>
+                <span style="padding-left: 10px;">"name": "u_def_ext_students",</span><br>
+                <span style="padding-left: 10px;">"tables": {</span><br>
+                    <span style="padding-left: 20px;">"u_def_ext_students": {</span><br>
+                        <span style="padding-left: 30px;">"schoology_access_code": "1234567890"</span><br>
+                    <span style="padding-left: 20px;">}</span><br>
+                <span style="padding-left: 10px;">}</span><br>
+            }<br></div>
+
+        </p>
+        <p>
+            <h5>Get info for all schools</h5>
+            <div>url: https://<span class="powerschool-host">your.powerschool.url</span>/ws/v1/district/school</div>
+            <div>method: GET</div>
+            <div>payload: Select "Ignore" in node config or pass {}.<br></div>
+
+        </p>
+        <p>
+            <h5>Get unpaginated records from a PowerQuery</h5>
+            <div>url: https://<span class="powerschool-host">your.powerschool.url</span>/ws/schema/query/com.your.powerquery.name?pagesize=0</div>
+            <div>method: POST</div>
+            <div>payload: Select "Ignore" in node property or pass {}.<br></div>
+
+        </p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<!-- The example below shows a small subset of the properties that can be set-->
+<script type="text/javascript">
+    RED.nodes.registerType('powerschool-request', {
+        category: 'network',
+        defaults: {
+            name: {value:""},
+            url: {value:""},
+            method: {value:""},
+            property: {value:"payload", validate: RED.validators.typedInput("propertyType")},
+            propertyType: { value:"msg" },
+
+        },
+        inputs:1,               // set the number of inputs - only 0 or 1
+        outputs:2,              // 1 = Success (200), 2 = Error
+        color: "#C0DEED",
+        icon: "icons/node-red/parser-json.svg",
+        label: function() {
+            return this.name || "PS Request";
+        },
+        outputLabels: ["Success", "Error"],
+        paletteLabel: "PS Request",
+        oneditprepare: function() {
+            $("#node-input-property").typedInput(
+                    {default:this.propertyType||'msg',
+                    types:['msg','flow','global','jsonata','env', { value: 'ignore', label: 'Ignore (No Data)' }]
+                });
+
+        },
+        oneditsave: function() {
+            this.propertyType = $("#node-input-property").typedInput('type');
+        }
+        
+    });
+</script>

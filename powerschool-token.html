@@ -1,0 +1,49 @@
+
+<script type="text/x-red" data-template-name="powerschool-token">
+   <div class="form-row">
+        <label for="node-input-creds"> PS API Token</label>
+        <input type="text" id="node-input-creds">
+    </div>
+    
+    <!-- By convention, most nodes have a 'name' property. The following div -->
+    <!-- provides the necessary field. Should always be the last option      -->
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    
+</script>
+
+
+<!-- Next, some simple help text is provided for the node.                   -->
+<script type="text/x-red" data-help-name="powerschool-token">
+
+    <h3>About</h3>
+    <p>Retrieves a new PS API Token from and adds it to msg.ps_token.</p>
+
+    <h3>Use</h3>
+    <p>Configure a PowerSchool API connection (Hostname, Client ID, Client Secret).</p>
+    <p>For more information on these parameters see the PowerSchool Developer Site:</p>
+    <p><a href="https://support.powerschool.com/developer" target="_blank">https://support.powerschool.com/developer</a></p>
+</script>
+
+<!-- Finally, the node type is registered along with all of its properties   -->
+<!-- The example below shows a small subset of the properties that can be set-->
+<script type="text/javascript">
+    RED.nodes.registerType('powerschool-token', {
+        category: 'network',
+        defaults: {    
+            creds: {value:"", type:"powerschool-client"},
+            name: {value: ""}
+        },
+        inputs:1,               // set the number of inputs - only 0 or 1
+        outputs:1,              // set the number of outputs - 0 to n
+        color: "#C0DEED",
+        icon: "font-awesome/fa-sign-in",
+        label: function() {
+            return this.name || "PS Token";
+        },
+        paletteLabel: "PS Token"
+        
+    });
+</script>
