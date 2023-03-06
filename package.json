@@ -39,8 +39,5 @@
       "powerschool-request": "powerschool-request.js",
       "powerschool-client": "powerschool-client.js"
     }
-  },
-  "publishConfig": {
-    "@bjkemp:registry": "https://npm.pkg.github.com"
   }
 }
