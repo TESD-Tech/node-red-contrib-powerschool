@@ -4,7 +4,7 @@ A set of nodes which connect to and interact with the PowerSchool API.
 
 ## Installation
 
-`npm install @tesd/node-red-contrib-powerschool`
+`pnpm install @tesd-tech/node-red-contrib-powerschool`
 
 ## Quick Start
 
