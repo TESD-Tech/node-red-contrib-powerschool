@@ -52,7 +52,7 @@ module.exports = function(RED) {
 		
 		this.on('input', function (msg) {
 			// Retrieve the node's properties
-			const props = n.props
+			const props = msg.props || n.props;
 
 			node.warn(props);
 
