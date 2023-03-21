@@ -78,8 +78,6 @@ module.exports = function(RED) {
 				props.secret = msg[n.secret]
 			}
 
-			node.warn(props);
-
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
 
