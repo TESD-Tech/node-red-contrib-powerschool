@@ -52,7 +52,12 @@ module.exports = function(RED) {
 		
 		this.on('input', function (msg) {
 			// Retrieve the node's properties
-			const props = msg.props || n.props;
+			const props = {
+				client: n.client,
+				secret: n.secret,
+				host: n.host,
+				ssl_reject: n.ssl_reject
+			};
 
 			node.warn(props);
 

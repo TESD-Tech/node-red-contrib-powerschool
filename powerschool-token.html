@@ -87,34 +87,6 @@
                 typeField: "#node-input-ssl_reject-type"
             })
         },
-        oneditsave: function () {
-            let props = {
-                name: $("#node-input-name").val(),
-                host: {
-                    value: $("#node-input-host").typedInput('value').value,
-                    type: $("#node-input-host").typedInput('type')
-                },
-                client: {
-                    value: $("#node-input-client").typedInput('value').value,
-                    type: $("#node-input-client").typedInput('type')
-                },
-                secret: {
-                    value: $("#node-input-secret").typedInput('value').value,
-                    type: $("#node-input-secret").typedInput('type')
-                },
-                ssl_reject: {
-                    value: $("#node-input-ssl_reject").typedInput('value').value,
-                    type: $("#node-input-ssl_reject").typedInput('type')
-                }
-            };
-            // Set the values of the input elements to the corresponding typedInput values
-            $("#node-input-host").val(props.host.value);
-            $("#node-input-client").val(props.client.value);
-            $("#node-input-secret").val(props.secret.value);
-            $("#node-input-ssl_reject").val(props.ssl_reject.value);
-            // Save the properties
-            this.props = props;
-        },
         oneditcancel: function () {
             // this.props = null
         }
