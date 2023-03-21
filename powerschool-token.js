@@ -94,13 +94,14 @@ module.exports = function(RED) {
 
 				_internals.getToken( props, function(result){
 					if ( result.status === 200 ) {
-						msg.ps_token = result.data;
-						msg.ps_token.host = props.host;
+						msg.ps_token = result.data
+						msg.ps_token.host = props.host
+						msg.ps_token.ssl_reject = props.ssl_reject
 
-						msg.ps_token.expires = new Date();
-						msg.ps_token.expires.setSeconds( msg.ps_token.expires.getSeconds() + result.data.expires_in );
+						msg.ps_token.expires = new Date()
+						msg.ps_token.expires.setSeconds( msg.ps_token.expires.getSeconds() + result.data.expires_in )
 
-						globalContext.set( 'ps_api', msg.ps_token );
+						globalContext.set( 'ps_api', msg.ps_token )
 
 					} else {
 						node.error( result );
