@@ -46,71 +46,77 @@
 
 <script type="text/javascript">
     RED.nodes.registerType('powerschool-token', {
-            category: 'network',
-            defaults: {
-                name: { value: "" },
-                host: { value: "", required: true },
-                client: { value: "", required: true },
-                secret: { value: "", required: true },
-                ssl_reject: { value: false }
-            },
-            inputs: 1,
-            outputs: 1,
-            color: "#C0DEED",
-            icon: "icons/node-red/parser-json.svg",
-            label: function () {
-                return this.name || "PS Token";
-            },
-            paletteLabel: "PS Token",
-            oneditprepare: function () {
-                $("#node-input-client").typedInput({
-                    type: "msg",
-                    types: ["msg", "flow", "global", "cred"],
-                    typeField: "#node-input-client-type"
-                })
+        category: 'network',
+        defaults: {
+            name: { value: "" },
+            host: { value: "", required: true },
+            client: { value: "", required: true },
+            secret: { value: "", required: true },
+            ssl_reject: { value: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        color: "#C0DEED",
+        icon: "icons/node-red/parser-json.svg",
+        label: function () {
+            return this.name || "PS Token";
+        },
+        paletteLabel: "PS Token",
+        oneditprepare: function () {
+            $("#node-input-client").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "cred"],
+                typeField: "#node-input-client-type"
+            })
 
-                $("#node-input-secret").typedInput({
-                    type: "msg",
-                    types: ["msg", "flow", "global", "cred"],
-                    typeField: "#node-input-secret-type"
-                })
+            $("#node-input-secret").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global", "cred"],
+                typeField: "#node-input-secret-type"
+            })
 
-                $("#node-input-host").typedInput({
-                    type: "msg",
-                    types: ["str", "msg", "flow", "global"],
-                    typeField: "#node-input-host-type"
-                })
+            $("#node-input-host").typedInput({
+                type: "msg",
+                types: ["str", "msg", "flow", "global"],
+                typeField: "#node-input-host-type"
+            })
 
-                $("#node-input-ssl_reject").typedInput({
-                    type: "msg",
-                    types: ["bool"],
-                    typeField: "#node-input-ssl_reject-type"
-                })
-            },
-            oneditsave: function () {
-                let props = {
-                    name: $("#node-input-name").val(),
-                    host: {
-                        value: $("#node-input-host").val(),
-                        type: $("#node-input-host-type").val()
-                    },
-                    client: {
-                        value: $("#node-input-client").val(),
-                        type: $("#node-input-client-type").val()
-                    },
-                    secret: {
-                        value: $("#node-input-secret").val(),
-                        type: $("#node-input-secret-type").val()
-                    },
-                    ssl_reject: {
-                        value: $("#node-input-ssl_reject").val(),
-                        type: $("#node-input-ssl_reject-type").val()
-                    }
+            $("#node-input-ssl_reject").typedInput({
+                type: "msg",
+                types: ["bool"],
+                typeField: "#node-input-ssl_reject-type"
+            })
+        },
+        oneditsave: function () {
+            let props = {
+                name: $("#node-input-name").val(),
+                host: {
+                    value: $("#node-input-host").typedInput('value').value,
+                    type: $("#node-input-host").typedInput('type')
+                },
+                client: {
+                    value: $("#node-input-client").typedInput('value').value,
+                    type: $("#node-input-client").typedInput('type')
+                },
+                secret: {
+                    value: $("#node-input-secret").typedInput('value').value,
+                    type: $("#node-input-secret").typedInput('type')
+                },
+                ssl_reject: {
+                    value: $("#node-input-ssl_reject").typedInput('value').value,
+                    type: $("#node-input-ssl_reject").typedInput('type')
                 }
-                this.props = props
-            },
-            oneditcancel: function () {
-                // this.props = null
-            }
-        });
+            };
+            // Set the values of the input elements to the corresponding typedInput values
+            $("#node-input-host").val(props.host.value);
+            $("#node-input-client").val(props.client.value);
+            $("#node-input-secret").val(props.secret.value);
+            $("#node-input-ssl_reject").val(props.ssl_reject.value);
+            // Save the properties
+            this.props = props;
+        },
+        oneditcancel: function () {
+            // this.props = null
+        }
+    });
 </script>
