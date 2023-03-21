@@ -17,13 +17,13 @@ _internals.getToken = function (creds, cb) {
 	});
 	
 	const ps_hash = (new Buffer.from(
-		creds.client_id 
+		creds.client
 		+ ":" 
-		+ creds.client_secret
+		+ creds.secret
 	)).toString('base64');
 
 	instance.post(
-		'https://' + creds.powerschool_host + '/oauth/access_token',
+		'https://' + creds.host + '/oauth/access_token',
 		null,
 		{
 			headers: {
@@ -52,7 +52,13 @@ module.exports = function(RED) {
 		
 		this.on('input', function (msg) {
 			
-			var creds = RED.nodes.getNode(n.creds);
+			// var creds = RED.nodes.getNode(n.creds);
+			const creds = {
+				client: RED.nodes.getNode(n.client),
+				secret: RED.nodes.getNode(n.secret),
+				host: RED.nodes.getNode(n.host),
+				ssl_reject: RED.nodes.getNode(n.ssl_reject)
+			}
 
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
