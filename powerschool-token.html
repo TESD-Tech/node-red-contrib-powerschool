@@ -49,9 +49,9 @@
             category: 'network',
             defaults: {
                 name: { value: "" },
-                host: { value: "" },
-                client: { value: "" },
-                secret: { value: "" },
+                host: { value: "", required: true },
+                client: { value: "", required: true },
+                secret: { value: "", required: true },
                 ssl_reject: { value: false }
             },
             inputs: 1,
