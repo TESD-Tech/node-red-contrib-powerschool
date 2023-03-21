@@ -59,7 +59,7 @@ module.exports = function(RED) {
 				ssl_reject: n.ssl_reject
 			};
 
-			node.warn(props);
+			node.warn(n);
 
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
