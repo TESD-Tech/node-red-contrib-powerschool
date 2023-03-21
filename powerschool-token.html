@@ -7,19 +7,19 @@
     <div class="form-row">
         <label for="node-input-secret">PS API Client Secret</label>
         <input type="text" id="node-input-secret">
-        <input type="hidden" id="node-input-secret-type">
+        <input type="hidden" id="node-input-secretType">
     </div>
 
     <div class="form-row">
         <label for="node-input-host">PS API Host Name</label>
         <input type="text" id="node-input-host" placeholder="(i.e. powerschool.yoursite.edu)">
-        <input type="hidden" id="node-input-host-type">
+        <input type="hidden" id="node-input-hostType">
     </div>
 
     <div class="form-row">
         <label for="node-input-ssl_reject"><i class="fa fa-lock"></i> SSL rejectUnauthorized</label>
         <input type="text" id="node-input-ssl_reject">
-        <input type="hidden" id="node-input-ssl_reject-type">
+        <input type="hidden" id="node-input-ssl_rejectType">
     </div>
     
     <!-- By convention, most nodes have a 'name' property. The following div -->
@@ -50,11 +50,11 @@
         defaults: {
             name: { value: "" },
             host: { value: "", required: true },
-            host_type: { value: "msg" },
+            hostType: { value: "msg" },
             client: { value: "", required: true },
-            client_type: { value: "msg" },
+            clientType: { value: "msg" },
             secret: { value: "", required: true },
-            secret_type: { value: "msg" },
+            secretType: { value: "msg" },
             ssl_reject: { value: false }
         },
         inputs: 1,
@@ -69,25 +69,25 @@
             $("#node-input-client").typedInput({
                 type: "msg",
                 types: ["msg", "flow", "global", "cred"],
-                typeField: "#node-input-client-type"
+                typeField: "#node-input-clientType"
             })
 
             $("#node-input-secret").typedInput({
                 type: "msg",
                 types: ["msg", "flow", "global", "cred"],
-                typeField: "#node-input-secret-type"
+                typeField: "#node-input-secretType"
             })
 
             $("#node-input-host").typedInput({
                 type: "msg",
                 types: ["str", "msg", "flow", "global"],
-                typeField: "#node-input-host-type"
+                typeField: "#node-input-hostType"
             })
 
             $("#node-input-ssl_reject").typedInput({
                 type: "msg",
                 types: ["bool"],
-                typeField: "#node-input-ssl_reject-type"
+                typeField: "#node-input-ssl_rejectType"
             })
         },
         oneditcancel: function () {
