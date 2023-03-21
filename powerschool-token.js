@@ -3,10 +3,10 @@ const https = require( 'https' );
 
 var _internals = {};
 
-_internals.getToken = function (creds, cb) {
+_internals.getToken = function (props, cb) {
 	var ssl_reject = true;
 
-	if ( creds.ssl_reject == 'false' ) {
+	if ( props.ssl_reject == 'false' ) {
 		ssl_reject = false;
 	}
 
@@ -17,13 +17,13 @@ _internals.getToken = function (creds, cb) {
 	});
 	
 	const ps_hash = (new Buffer.from(
-		creds.client
+		props.client
 		+ ":" 
-		+ creds.secret
+		+ props.secret
 	)).toString('base64');
 
 	instance.post(
-		'https://' + creds.host + '/oauth/access_token',
+		'https://' + props.host + '/oauth/access_token',
 		null,
 		{
 			headers: {
@@ -51,16 +51,14 @@ module.exports = function(RED) {
 		var globalContext = this.context().global;
 		
 		this.on('input', function (msg) {
-			
-			// var creds = RED.nodes.getNode(n.creds);
-			const creds = {
+			const props = {
 				client: n.client,
 				secret: n.secret,
 				host: n.host,
 				ssl_reject: n.ssl_reject
 			}
 
-			node.warn(creds)
+			node.warn(n)
 
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
@@ -76,10 +74,10 @@ module.exports = function(RED) {
 			if ( get_ps_token == true ) {
 				node.warn( 'Generating New PS API Token' );
 
-				_internals.getToken( creds, function(result){
+				_internals.getToken( props, function(result){
 					if ( result.status === 200 ) {
 						msg.ps_token = result.data;
-						msg.ps_token.host = creds.host;
+						msg.ps_token.host = props.host;
 
 						msg.ps_token.expires = new Date();
 						msg.ps_token.expires.setSeconds( msg.ps_token.expires.getSeconds() + result.data.expires_in );
