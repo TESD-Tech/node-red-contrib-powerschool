@@ -77,7 +77,7 @@ module.exports = function(RED) {
 				_internals.getToken( creds, function(result){
 					if ( result.status === 200 ) {
 						msg.ps_token = result.data;
-						msg.ps_token.host = creds.powerschool_host;
+						msg.ps_token.host = creds.host;
 
 						msg.ps_token.expires = new Date();
 						msg.ps_token.expires.setSeconds( msg.ps_token.expires.getSeconds() + result.data.expires_in );
