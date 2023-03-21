@@ -1,8 +1,20 @@
 
 <script type="text/x-red" data-template-name="powerschool-token">
-   <div class="form-row">
-        <label for="node-input-creds"> PS API Token</label>
-        <input type="text" id="node-input-creds">
+    <div class="form-row">
+        <label for="node-input-client">PS API Client ID</label>
+        <input type="text" id="node-input-client">
+        <input type="hidden" id="node-input-client-type">
+    </div>
+    <div class="form-row">
+        <label for="node-input-secret">PS API Client Secret</label>
+        <input type="text" id="node-input-secret">
+        <input type="hidden" id="node-input-secret-type">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-host">PS API Host Name</label>
+        <input type="text" id="node-input-host">
+        <input type="hidden" id="node-input-host-type">
     </div>
     
     <!-- By convention, most nodes have a 'name' property. The following div -->
@@ -27,23 +39,46 @@
     <p><a href="https://support.powerschool.com/developer" target="_blank">https://support.powerschool.com/developer</a></p>
 </script>
 
-<!-- Finally, the node type is registered along with all of its properties   -->
-<!-- The example below shows a small subset of the properties that can be set-->
 <script type="text/javascript">
     RED.nodes.registerType('powerschool-token', {
         category: 'network',
-        defaults: {    
-            creds: {value:"", type:"powerschool-client"},
-            name: {value: ""}
+        defaults: {
+            name: { value: "" },
+            host: { value: "" },
+            client: { value: "" },
+            secret: { value: "" },
+            ssl_reject: { value: false },
+            //access_token: {value: ""},
+            //access_token_expiry: {value: ""}
         },
-        inputs:1,               // set the number of inputs - only 0 or 1
-        outputs:1,              // set the number of outputs - 0 to n
+        inputs: 1,               // set the number of inputs - only 0 or 1
+        outputs: 2,              // 1 = Success (200), 2 = Error
         color: "#C0DEED",
-        icon: "font-awesome/fa-sign-in",
-        label: function() {
+        icon: "icons/node-red/parser-json.svg",
+        label: function () {
             return this.name || "PS Token";
         },
-        paletteLabel: "PS Token"
-        
+        outputLabels: ["Success", "Error"],
+        paletteLabel: "PS Token",
+        oneditprepare: function () {
+            $("#node-input-client").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global"],
+                typeField: "#node-input-client-type"
+            })
+
+            $("#node-input-secret").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global"],
+                typeField: "#node-input-secret-type"
+            })
+
+            $("#node-input-host").typedInput({
+                type: "msg",
+                types: ["msg", "flow", "global"],
+                typeField: "#node-input-host-type"
+            })
+
+        }
     });
 </script>
