@@ -60,6 +60,8 @@ module.exports = function(RED) {
 				ssl_reject: RED.nodes.getNode(n.ssl_reject)
 			}
 
+			node.warn(creds)
+
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
 
