@@ -47,8 +47,9 @@ module.exports = function(RED) {
 	  
 		RED.nodes.createNode(this,n);
 
-		var node = this;
-		var globalContext = this.context().global;
+		const node = this
+		const globalContext = this.context().global
+		const flowContext = this.context().flow
 		
 		this.on('input', function (msg) {
 			// Retrieve the node's properties
@@ -57,9 +58,27 @@ module.exports = function(RED) {
 				secret: n.secret,
 				host: n.host,
 				ssl_reject: n.ssl_reject
-			};
+			}
 
-			node.warn(n);
+			node.warn(props)
+
+			if ( n.clientType === 'global' ) {
+				props.client = globalContext.get(n.client)
+			} else if ( n.clientType === 'flow' ) {
+				props.client = flowContext.get(n.client)
+			} else if ( n.clientType === 'msg' ) {
+				props.client = msg[n.client]
+			}
+
+			if ( n.secretType === 'global' ) {
+				props.secret = globalContext.get(n.secret)
+			} else if ( n.secretType === 'flow' ) {
+				props.secret = flowContext.get(n.secret)
+			} else if ( n.secretType === 'msg' ) {
+				props.secret = msg[n.secret]
+			}
+
+			node.warn(props);
 
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
