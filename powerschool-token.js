@@ -51,14 +51,10 @@ module.exports = function(RED) {
 		var globalContext = this.context().global;
 		
 		this.on('input', function (msg) {
-			const props = {
-				client: n.client,
-				secret: n.secret,
-				host: n.host,
-				ssl_reject: n.ssl_reject
-			}
+			// Retrieve the node's properties
+			const props = n.props
 
-			node.warn(n)
+			node.warn(props);
 
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
