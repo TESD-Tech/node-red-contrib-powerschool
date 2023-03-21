@@ -54,10 +54,10 @@ module.exports = function(RED) {
 			
 			// var creds = RED.nodes.getNode(n.creds);
 			const creds = {
-				client: RED.nodes.getNode(n.client),
-				secret: RED.nodes.getNode(n.secret),
-				host: RED.nodes.getNode(n.host),
-				ssl_reject: RED.nodes.getNode(n.ssl_reject)
+				client: n.client,
+				secret: n.secret,
+				host: n.host,
+				ssl_reject: n.ssl_reject
 			}
 
 			node.warn(creds)
