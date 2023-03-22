@@ -94,18 +94,21 @@ _internals.sendRequest = function ( request ) {
 	}).catch((error) => {
 		if ( error.response.status === 404 ) {
 			if( error.response.data !== undefined) {
-				console.log( error.response.data )
-				// if( error.response.data.includes('Use POST to insert a new record') || error.response.data.includes('Use PUT to update existing records') ) {
-				// 	const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
-				// 	this_request.method = reshapedPayload.method
-				// 	this_request.url = reshapedPayload.url
-				// 	this_request.data = reshapedPayload.payload
-				// 	instance( this_request ).then((response) => {
-				// 		request.done( response, null )
-				// 	}).catch((error) => {
-				// 		request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
-				// 	})
-				// }
+				try {
+					if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
+						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
+						this_request.method = reshapedPayload.method
+						this_request.url = reshapedPayload.url
+						this_request.data = reshapedPayload.payload
+						instance( this_request ).then((response) => {
+							request.done( response, null )
+						}).catch((error) => {
+							request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+						})
+					}
+				} catch (e) {
+					request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+				}
 			} else {
 				request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 			}
