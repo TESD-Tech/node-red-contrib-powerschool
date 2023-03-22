@@ -25,8 +25,6 @@ _internals.sendRequest = function ( request ) {
 	if ( request.data && request.method.toLowerCase() !== 'get' ) {
 		this_request.data = request.data
 	}
-
-	console.log( this_request )
 	
 	instance( this_request ).then((response) => {
 		request.done( response, null )
@@ -95,8 +93,6 @@ module.exports = function(RED) {
 				}
 			}
 
-			node.warn( request )
-
 			getProperty( n, msg, (err,property) => {
 				if (err) {
 					node.warn(err)
@@ -105,8 +101,6 @@ module.exports = function(RED) {
 					request.data = property
 				}
 			})
-
-			node.warn( request )
 
 			if ( !request.ps_api ) { 
 				node.error( 'PowerSchool API Token Not Provided.' )
