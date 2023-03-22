@@ -21,8 +21,8 @@ _internals.sendRequest = function ( request ) {
 		url: request.url
 	}
 
-	// Add the data if it exists and method is POST
-	if ( request.data && request.method.toLowerCase() === 'post' ) {
+	// Add the data if it exists and method is not GET
+	if ( request.data && request.method.toLowerCase() !== 'get' ) {
 		this_request.data = request.data
 	}
 
