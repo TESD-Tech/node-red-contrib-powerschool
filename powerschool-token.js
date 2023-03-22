@@ -4,15 +4,10 @@ const https = require( 'https' );
 var _internals = {};
 
 _internals.getToken = function (props, cb) {
-	var ssl_reject = true;
-
-	if ( props.ssl_reject == 'false' ) {
-		ssl_reject = false;
-	}
 
 	const instance = axios.create({
 		httpsAgent: new https.Agent({  
-			rejectUnauthorized: ssl_reject
+			rejectUnauthorized: props.ssl_reject
 		})
 	});
 	

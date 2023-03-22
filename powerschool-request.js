@@ -73,7 +73,9 @@ module.exports = function(RED) {
 
 			var url = n.url || msg.url;
 			var method = n.method || msg.method;
-			var data = {};
+			var data = {}
+
+			const ps_api = n.ps_api
 
 			getProperty( n, msg, (err,property) => {
 					if (err) {
@@ -84,8 +86,6 @@ module.exports = function(RED) {
 					}
 				});
 
-
-			var ps_api = globalContext.get( 'ps_api' );
 
 			if ( !ps_api ) { 
 				node.error( 'PowerSchool API Token Not Provided.' );
