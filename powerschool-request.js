@@ -16,8 +16,7 @@ _internals.extractTableFromUrl = function ( url ) {
 _internals.extractIdFromUrl = function ( url ) {
 	const regex = /\/(\d+)$/
 	const match = url.match( regex )
-	console.log(match)
-	if ( match ) {
+	if ( match && match[1] ) {
 		return match[1]
 	} else {
 		return null
@@ -35,12 +34,8 @@ _internals.reshapePayload = function (payload, url, method) {
 	// 	id = payload.tables[table].studentsdcid
 	// }
 
-	console.log(url, id)
-
 	// Strip studentsdcid from URL
 	url = url.replace(`/${id}`, "")
-
-	console.log( url )
 
   const reshapedPayload = {
     tables: {
@@ -111,7 +106,7 @@ _internals.sendRequest = function ( request ) {
 						_internals.sendRequest( reshaped_request ).then((response) => {
 							request.done( response, null )
 						}).catch((error) => {
-							request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+							request.done( error.response, `Reshape Failed! URL: ${this_request.url},  Error: ${error}` )
 						})
 					} else {
 						request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
