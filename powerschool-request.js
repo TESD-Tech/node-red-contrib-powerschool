@@ -3,7 +3,7 @@ const https = require( 'https' )
 
 var _internals = {}
 
-_internals.sendRequest = function ( ps_api, method, url, data, done, token ) {
+_internals.sendRequest = function ( request ) {
 	const instance = axios.create({
 		httpsAgent: new https.Agent({  
 			rejectUnauthorized: ps_api.ssl_reject
@@ -73,27 +73,12 @@ module.exports = function(RED) {
 		
 		this.on('input', function (msg) {
 
-			var url = n.url || msg.url
-			var method = n.method || msg.method
-			var data = {}
-
-			const ps_api = msg.ps_api || globalContext.get('ps_api')
-
-			getProperty( n, msg, (err,property) => {
-					if (err) {
-						node.warn(err)
-						done()
-					} else {
-						data = property
-					}
-				})
-
-
-			if ( !ps_api ) { 
-				node.error( 'PowerSchool API Token Not Provided.' )
-				node.send(msg)
-			} else {
-				_internals.sendRequest( ps_api, method, url, data, function(result, err){
+			const request = {
+				url: n.url || msg.url,
+				method: n.method || msg.method,
+				data: {},
+				ps_api: msg.ps_api || globalContext.get('ps_api'),
+				done: function(result, err) {
 					if( result ) {
 						if ( result.status === 200 ) {
 							msg.payload = result.data
@@ -105,15 +90,30 @@ module.exports = function(RED) {
 							node.send( [null, msg ])
 						}
 					} else {
-						msg.error = {"error": err }
-						node.status({fill:'red',shape:'dot' })
+						msg.error = {"error": err, "detail": result.data }
+						node.status({fill:'red',shape:'dot',text: 'Status: ' + result.status })
 						node.send( [null, msg ])
 					}
-					
-				})
+				}
 			}
 
+			node.warn( request )
 
+			getProperty( n, msg, (err,property) => {
+					if (err) {
+						node.warn(err)
+						done()
+					} else {
+						data = property
+					}
+				})
+
+			if ( !ps_api ) { 
+				node.error( 'PowerSchool API Token Not Provided.' )
+				node.send(msg)
+			} else {
+				_internals.sendRequest( request )
+			}
 		})
 	}
 
