@@ -48,7 +48,6 @@ _internals.reshapePayload = function (payload, url, method) {
 	if( ["post", "put"].includes(method) ) {
 		if (method === "post") {
 			reshapedPayload.tables[table].studentsdcid = id
-			console.log(reshapedPayload)
 			return {
 				method: "PUT",
 				payload: reshapedPayload,
@@ -106,6 +105,8 @@ _internals.sendRequest = function ( request ) {
 					reshaped_request.method = reshapedPayload.method
 					reshaped_request.url = reshapedPayload.url
 					reshaped_request.data = reshapedPayload.payload
+
+					console.log( reshaped_request.data )
 
 					_internals.sendRequest( reshaped_request )
 				} else {
