@@ -25,6 +25,8 @@ _internals.sendRequest = function ( request ) {
 	if ( request.data && request.method.toLowerCase() === 'post' ) {
 		this_request.data = request.data
 	}
+
+	console.log( this_request )
 	
 	instance( this_request ).then((response) => {
 		request.done( response, null )
