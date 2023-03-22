@@ -57,7 +57,7 @@ module.exports = function(RED) {
 				client: n.client,
 				secret: n.secret,
 				host: n.host,
-				ssl_reject: n.ssl_reject
+				ssl_reject: (n.ssl_reject == 'true')
 			}
 
 			node.warn(props)
