@@ -3,6 +3,69 @@ const https = require( 'https' )
 
 var _internals = {}
 
+_internals.extractTableFromUrl = function ( url ) {
+	const regex = /\/ws\/schema\/table\/([^/]+)/
+	const match = url.match( regex )
+	if ( match && match[1] ) {
+		return match[1]
+	} else {
+		return null
+	}
+}
+
+_internals.extractIdFromUrl = function ( url ) {
+	const regex = /\/(\d+)$/
+	const match = url.match( regex )
+	if ( match ) {
+		return match[1]
+	} else {
+		return null
+	}
+}
+
+_internals.reshapePayload = function (payload, url, method) {
+	const table = _internals.extractTableFromUrl(url)
+	const method = method.toLowerCase()
+	let id
+
+	if (method.toLowerCase === "put") {
+		id = _internals.extractIdFromUrl(url)
+	} else if (method === "post") {
+		id = payload.tables[table].studentsdcid
+	}
+
+	// Strip studentsdcid from URL
+	url = url.replace(`/${id}`, "")
+
+  const reshapedPayload = {
+    tables: {
+      [table]: {
+        ...payload.tables[payload.name]
+      }
+    }
+  }
+
+	if( ["post", "put"].includes(method) ) {
+		if (method === "post") {
+			return {
+				method: "PUT",
+				payload: reshapedPayload,
+				url: url + "/" + id
+			}
+		} else if (method === "put") {
+			reshapedPayload.name = table
+			return {
+				method: "POST",
+				payload: reshapedPayload,
+				url: url
+			}
+		}
+	} else {
+		throw new Error("Invalid method: " + method)
+	}
+}
+
+
 _internals.sendRequest = function ( request ) {
 	const instance = axios.create({
 		httpsAgent: new https.Agent({  
@@ -29,7 +92,21 @@ _internals.sendRequest = function ( request ) {
 	instance( this_request ).then((response) => {
 		request.done( response, null )
 	}).catch((error) => {
-		request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+		if ( error.detail.status === 404 ) {
+			if( error.detail.data.includes('Use POST to insert a new record') || error.detail.data.includes('Use PUT to update existing records') ) {
+				const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
+				this_request.method = reshapedPayload.method
+				this_request.url = reshapedPayload.url
+				this_request.data = reshapedPayload.payload
+				instance( this_request ).then((response) => {
+					request.done( response, null )
+				}).catch((error) => {
+					request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+				})
+			}
+		} else {
+			request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+		}
 	})
 	
 }
