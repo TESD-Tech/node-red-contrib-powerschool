@@ -81,12 +81,12 @@ module.exports = function(RED) {
 							node.status({fill:'green',shape:'dot',text: 'Status: 200'})
 							node.send([msg, null])
 						} else {
-							msg.error = {"error": err, "detail": result.data }
+							msg.error = {"error": err, "detail": result }
 							node.status({fill:'red',shape:'dot',text: 'Status: ' + result.status })
 							node.send( [null, msg ])
 						}
 					} else {
-						msg.error = {"error": err, "detail": result.data }
+						msg.error = {"error": err, "detail": result }
 						node.status({fill:'red',shape:'dot',text: 'Status: ' + result.status })
 						node.send( [null, msg ])
 					}
