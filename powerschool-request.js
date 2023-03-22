@@ -25,7 +25,7 @@ _internals.extractIdFromUrl = function ( url ) {
 
 _internals.reshapePayload = function (payload, url, method) {
 	const table = _internals.extractTableFromUrl(url)
-	const method = method.toLowerCase()
+	method = method.toLowerCase()
 	let id
 
 	if (method.toLowerCase === "put") {
