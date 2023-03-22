@@ -60,7 +60,7 @@ module.exports = function(RED) {
 			const request = {
 				url: n.url || msg.url,
 				method: n.method || msg.method,
-				data: {},
+				data: msg.payload || {},
 				ps_api: msg.ps_api || globalContext.get('ps_api'),
 				done: function(result, err) {
 					if( result ) {
@@ -84,15 +84,17 @@ module.exports = function(RED) {
 			node.warn( request )
 
 			getProperty( n, msg, (err,property) => {
-					if (err) {
-						node.warn(err)
-						done()
-					} else {
-						data = property
-					}
-				})
+				if (err) {
+					node.warn(err)
+					done()
+				} else {
+					request.data = property
+				}
+			})
 
-			if ( !ps_api ) { 
+			node.warn( request )
+
+			if ( !request.ps_api ) { 
 				node.error( 'PowerSchool API Token Not Provided.' )
 				node.send(msg)
 			} else {
