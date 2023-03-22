@@ -27,13 +27,13 @@ _internals.extractIdFromUrl = function ( url ) {
 _internals.reshapePayload = function (payload, url, method) {
 	const table = _internals.extractTableFromUrl(url)
 	method = method.toLowerCase()
-	let id
+	let id = _internals.extractIdFromUrl(url)
 
-	if (method.toLowerCase === "put") {
-		id = _internals.extractIdFromUrl(url)
-	} else if (method === "post") {
-		id = payload.tables[table].studentsdcid
-	}
+	// if (method.toLowerCase === "put") {
+	// 	id = _internals.extractIdFromUrl(url)
+	// } else if (method === "post") {
+	// 	id = payload.tables[table].studentsdcid
+	// }
 
 	console.log(url, id)
 
