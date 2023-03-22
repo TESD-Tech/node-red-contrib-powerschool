@@ -34,8 +34,12 @@ _internals.reshapePayload = function (payload, url, method) {
 		id = payload.tables[table].studentsdcid
 	}
 
+	console.log(url, id)
+
 	// Strip studentsdcid from URL
 	url = url.replace(`/${id}`, "")
+
+	console.log( url )
 
   const reshapedPayload = {
     tables: {
