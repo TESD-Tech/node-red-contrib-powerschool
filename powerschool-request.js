@@ -105,6 +105,8 @@ _internals.sendRequest = function ( request ) {
 						request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 					})
 				}
+			} else {
+				request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 			}
 		} else {
 			request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
