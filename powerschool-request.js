@@ -97,7 +97,8 @@ _internals.sendRequest = function ( request ) {
 			if( error.response.data !== undefined) {
 				if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
 					console.log("Reshaping payload")
-					
+					let reshaped_request = { ...request }
+
 					const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
 
 					reshaped_request.method = reshapedPayload.method
