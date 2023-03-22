@@ -13,7 +13,7 @@ _internals.sendRequest = function ( request ) {
 	// Build the request
 	let this_request = {
 		headers: {
-			"Authorization": "Bearer " + request.ps_api.token,
+			"Authorization": "Bearer " + request.ps_api.access_token,
 			"Content-Type": "application/json",
 			"Accept": "application/json"
 		},
