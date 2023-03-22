@@ -10,7 +10,7 @@ _internals.sendRequest = function ( request ) {
 		})
 	})
 
-	if ( config.method.toLowerCase() === 'get' ) {
+	if ( request.method.toLowerCase() === 'get' ) {
 		delete request.data
 	}
 	
