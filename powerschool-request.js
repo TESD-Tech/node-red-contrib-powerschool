@@ -100,9 +100,7 @@ _internals.sendRequest = function ( request ) {
 						console.log("Reshaping payload")
 						
 						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
-
-						console.log(reshapedPayload)
-
+						
 						reshaped_request.method = reshapedPayload.method
 						reshaped_request.url = reshapedPayload.url
 						reshaped_request.data = reshapedPayload.payload
