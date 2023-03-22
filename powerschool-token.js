@@ -47,6 +47,9 @@ module.exports = function(RED) {
 		const flowContext = this.context().flow
 		
 		this.on('input', function (msg) {
+			const datetime = new Date().toLocaleString()
+			node.status({ fill: 'blue', shape: 'dot', text: datetime })
+
 			// Retrieve the node's properties
 			const props = {
 				client: n.client,

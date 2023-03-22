@@ -153,6 +153,8 @@ module.exports = function(RED) {
 		var globalContext = this.context().global
 		
 		this.on('input', function (msg) {
+			const datetime = new Date().toLocaleString()
+			node.status({ fill: 'blue', shape: 'circle', text: datetime })
 
 			const request = {
 				url: n.url || msg.url,
