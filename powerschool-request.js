@@ -95,14 +95,14 @@ module.exports = function(RED) {
 
 			node.warn( request )
 
-			// getProperty( n, msg, (err,property) => {
-			// 	if (err) {
-			// 		node.warn(err)
-			// 		done()
-			// 	} else {
-			// 		request.data = property
-			// 	}
-			// })
+			getProperty( n, msg, (err,property) => {
+				if (err) {
+					node.warn(err)
+					done()
+				} else {
+					request.data = property
+				}
+			})
 
 			node.warn( request )
 
