@@ -10,14 +10,26 @@ _internals.sendRequest = function ( request ) {
 		})
 	})
 
-	if ( request.method.toLowerCase() === 'get' ) {
-		delete request.data
+	// Build the request
+	let this_request = {
+		headers: {
+			"Authorization": "Bearer " + request.ps_api.token,
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		method: request.method ?? 'POST',
+		url: request.url
+	}
+
+	// Add the data if it exists and method is POST
+	if ( request.data && request.method.toLowerCase() === 'post' ) {
+		this_request.data = request.data
 	}
 	
-	instance( request ).then((response) => {
+	instance( this_request ).then((response) => {
 		request.done( response, null )
 	}).catch((error) => {
-		request.done( error.response, 'URL: ' + request.url + ',  Error: ' + error.message )
+		request.done( error.response, 'URL: ' + this_request.url + ',  Error: ' + error.message )
 	})
 	
 }
