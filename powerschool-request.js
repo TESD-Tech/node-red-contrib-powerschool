@@ -99,14 +99,16 @@ _internals.sendRequest = function ( request ) {
 	}).catch((error) => {
 		if ( error.response.status === 404 ) {
 			if( error.response.data !== undefined) {
-				console.dir(error.response.data.message)
 				try {
 					if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
+						console.log("Reshaping payload")
+						
 						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
-						this_request.method = reshapedPayload.method
-						this_request.url = reshapedPayload.url
-						this_request.data = reshapedPayload.payload
-						_internals.sendRequest( this_request ).then((response) => {
+						reshaped_request.method = reshapedPayload.method
+						reshaped_request.url = reshapedPayload.url
+						reshaped_request.data = reshapedPayload.payload
+
+						_internals.sendRequest( reshaped_request ).then((response) => {
 							request.done( response, null )
 						}).catch((error) => {
 							request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
