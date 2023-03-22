@@ -1,6 +1,6 @@
 {
   "name": "@tesd-tech/node-red-contrib-powerschool",
-  "version": "23.3.32",
+  "version": "23.3.33",
   "description": "Interact with the PowerSchool API",
   "main": "index.js",
   "engines": {
