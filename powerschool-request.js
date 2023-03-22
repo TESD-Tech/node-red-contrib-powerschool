@@ -68,7 +68,6 @@ _internals.reshapePayload = function (payload, url, method) {
 
 
 _internals.sendRequest = function ( request ) {
-	console.log(request)
 	const instance = axios.create({
 		httpsAgent: new https.Agent({  
 			rejectUnauthorized: request.ps_api.ssl_reject
@@ -94,29 +93,31 @@ _internals.sendRequest = function ( request ) {
 	instance( this_request ).then((response) => {
 		request.done( response, null )
 	}).catch((error) => {
-		if ( error.response.status === 404 ) {
-			if( error.response.data !== undefined) {
-				if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
-					console.log("Reshaping payload")
-					let reshaped_request = { ...request }
+		try {
+			if ( error.response.status === 404 ) {
+				if( error.response.data !== undefined) {
+					if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
+						console.log("Reshaping payload")
+						let reshaped_request = { ...request }
 
-					const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
+						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
 
-					reshaped_request.method = reshapedPayload.method
-					reshaped_request.url = reshapedPayload.url
-					reshaped_request.data = reshapedPayload.payload
+						reshaped_request.method = reshapedPayload.method
+						reshaped_request.url = reshapedPayload.url
+						reshaped_request.data = reshapedPayload.payload
 
-					console.log( reshaped_request.data )
-
-					_internals.sendRequest( reshaped_request )
+						_internals.sendRequest( reshaped_request )
+					} else {
+						request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+					}
 				} else {
 					request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 				}
 			} else {
 				request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 			}
-		} else {
-			request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
+		} catch (e) {
+			request.done( e, `URL: ${this_request.url},  Error: ${e}` )
 		}
 	})
 	
