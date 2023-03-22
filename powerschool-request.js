@@ -67,6 +67,7 @@ _internals.reshapePayload = function (payload, url, method) {
 
 
 _internals.sendRequest = function ( request ) {
+	console.log(request)
 	const instance = axios.create({
 		httpsAgent: new https.Agent({  
 			rejectUnauthorized: request.ps_api.ssl_reject
