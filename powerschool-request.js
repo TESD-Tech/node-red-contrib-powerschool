@@ -105,7 +105,7 @@ _internals.sendRequest = function ( request ) {
 						this_request.method = reshapedPayload.method
 						this_request.url = reshapedPayload.url
 						this_request.data = reshapedPayload.payload
-						instance( this_request ).then((response) => {
+						_internals.sendRequest( this_request ).then((response) => {
 							request.done( response, null )
 						}).catch((error) => {
 							request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
