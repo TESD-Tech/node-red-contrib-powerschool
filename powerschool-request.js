@@ -17,7 +17,7 @@ _internals.sendRequest = function ( request ) {
 	instance( request ).then((response) => {
 		request.done( response, null )
 	}).catch((error) => {
-		request.done( error.response, 'URL: ' + url + ',  Error: ' + error.message )
+		request.done( error.response, 'URL: ' + request.url + ',  Error: ' + error.message )
 	})
 	
 }
