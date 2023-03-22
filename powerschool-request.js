@@ -6,31 +6,15 @@ var _internals = {}
 _internals.sendRequest = function ( request ) {
 	const instance = axios.create({
 		httpsAgent: new https.Agent({  
-			rejectUnauthorized: ps_api.ssl_reject
+			rejectUnauthorized: request.ps_api.ssl_reject
 		})
 	})
 
-	const config = {
-		method: method ?? "POST",
-		url: url,
-		headers: {
-				"Authorization": "Bearer " + ps_api.access_token,
-				"Content-Type": "application/json",
-				"Accept": "application/json"
-			}
-	}
-
-	this.warn(config)
-
-	if ( Object.keys( data ).length > 0 ) {
-		config.data = data
-	}
-
 	if ( config.method.toLowerCase() === 'get' ) {
-		delete config.data
+		delete request.data
 	}
 	
-	instance( config ).then((response) => {
+	instance( request ).then((response) => {
 		done( response, null )
 	}).catch((error) => {
 		done( error.response, 'URL: ' + url + ',  Error: ' + error.message )
