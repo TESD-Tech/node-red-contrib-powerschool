@@ -95,25 +95,21 @@ _internals.sendRequest = function ( request ) {
 	}).catch((error) => {
 		if ( error.response.status === 404 ) {
 			if( error.response.data !== undefined) {
-				try {
-					if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
-						console.log("Reshaping payload")
-						
-						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
-						
-						reshaped_request.method = reshapedPayload.method
-						reshaped_request.url = reshapedPayload.url
-						reshaped_request.data = reshapedPayload.payload
+				if( error.response.data.message.includes('Use POST to insert a new record') || error.response.data.message.includes('Use PUT to update existing records') ) {
+					console.log("Reshaping payload")
+					
+					const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
 
-						_internals.sendRequest( reshaped_request ).then((response) => {
-							request.done( response, null )
-						}).catch((error) => {
-							request.done( error.response, `Reshape Failed! URL: ${this_request.url},  Error: ${error}` )
-						})
-					} else {
-						request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
-					}
-				} catch (e) {
+					reshaped_request.method = reshapedPayload.method
+					reshaped_request.url = reshapedPayload.url
+					reshaped_request.data = reshapedPayload.payload
+
+					_internals.sendRequest( reshaped_request ).then((response) => {
+						request.done( response, null )
+					}).catch((error) => {
+						request.done( error.response, `Reshape Failed! URL: ${this_request.url},  Error: ${error}` )
+					})
+				} else {
 					request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 				}
 			} else {
