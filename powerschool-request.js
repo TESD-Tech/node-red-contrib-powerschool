@@ -6,6 +6,7 @@ var _internals = {}
 _internals.extractTableFromUrl = function ( url ) {
 	const regex = /\/ws\/schema\/table\/([^/]+)/
 	const match = url.match( regex )
+	console.log(match)
 	if ( match && match[1] ) {
 		return match[1]
 	} else {
