@@ -105,6 +105,8 @@ _internals.sendRequest = function ( request ) {
 						}).catch((error) => {
 							request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 						})
+					} else {
+						request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
 					}
 				} catch (e) {
 					request.done( error.response, `URL: ${this_request.url},  Error: ${error}` )
