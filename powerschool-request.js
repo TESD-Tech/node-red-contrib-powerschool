@@ -75,7 +75,7 @@ module.exports = function(RED) {
 			var method = n.method || msg.method;
 			var data = {}
 
-			const ps_api = n.ps_api
+			const ps_api = msg.ps_api || globalContext.get('ps_api')
 
 			getProperty( n, msg, (err,property) => {
 					if (err) {
