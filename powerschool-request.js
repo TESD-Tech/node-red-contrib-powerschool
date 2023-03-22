@@ -20,7 +20,7 @@ _internals.sendRequest = function ( ps_api, method, url, data, done, token ) {
 			}
 	}
 
-	node.warn(config)
+	this.warn(config)
 
 	if ( Object.keys( data ).length > 0 ) {
 		config.data = data

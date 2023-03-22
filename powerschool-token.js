@@ -55,8 +55,6 @@ module.exports = function(RED) {
 				ssl_reject: (n.ssl_reject == 'true')
 			}
 
-			node.warn(props)
-
 			if ( n.clientType === 'global' ) {
 				props.client = globalContext.get(n.client)
 			} else if ( n.clientType === 'flow' ) {
