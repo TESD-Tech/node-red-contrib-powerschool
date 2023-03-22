@@ -71,6 +71,14 @@ module.exports = function(RED) {
 				props.secret = msg[n.secret]
 			}
 
+			if ( n.hostType === 'global' ) {
+				props.host = globalContext.get(n.host)
+			} else if ( n.hostType === 'flow' ) {
+				props.host = flowContext.get(n.host)
+			} else if ( n.hostType === 'msg' ) {
+				props.host = msg[n.host]
+			}
+
 			var ps_api = globalContext.get( 'ps_api' );
 			var get_ps_token = true;
 
