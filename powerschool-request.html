@@ -12,6 +12,11 @@
     </div>
 
     <div class="form-row">
+        <label for="node-input-fk">Foreign Key Field</label>
+        <input type="text" id="node-input-fk" placeholder="Foreign Key field (e.g. studentsdcid)">
+    </div>
+
+    <div class="form-row">
         <label for="node-input-property"><i class="fa fa-ellipsis-h"></i> <span>Payload</span></label>
         <input type="text" id="node-input-property" style="width: 70%"/>
         <input type="hidden" id="node-input-outputs"/>
@@ -93,6 +98,7 @@
         defaults: {
             name: {value:""},
             url: {value:""},
+            fk: {value:""},
             method: {value:""},
             property: {value:"payload", validate: RED.validators.typedInput("propertyType")},
             propertyType: { value:"msg" },

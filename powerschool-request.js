@@ -23,7 +23,7 @@ _internals.extractIdFromUrl = function ( url ) {
 	}
 }
 
-_internals.reshapePayload = function (payload, url, method) {
+_internals.reshapePayload = function (payload, url, method, fk) {
 	const table = _internals.extractTableFromUrl(url)
 	method = method.toLowerCase()
 	let id = _internals.extractIdFromUrl(url)
@@ -54,7 +54,7 @@ _internals.reshapePayload = function (payload, url, method) {
 			}
 		} else if (method === "put") {
 			reshapedPayload.name = table
-			reshapedPayload.tables[table].studentsdcid = id
+			reshapedPayload.tables[table][fk] = id
 			return {
 				method: "POST",
 				payload: reshapedPayload,
@@ -100,7 +100,7 @@ _internals.sendRequest = function ( request ) {
 						
 						let reshaped_request = { ...request }
 
-						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method )
+						const reshapedPayload = _internals.reshapePayload( request.data, request.url, request.method, request.fk )
 
 						reshaped_request.method = reshapedPayload.method
 						reshaped_request.url = reshapedPayload.url
@@ -160,6 +160,7 @@ module.exports = function(RED) {
 			const request = {
 				url: n.url || msg.url,
 				method: n.method || msg.method,
+				fk: n.fk || msg.fk,
 				data: msg.payload || {},
 				ps_api: msg.ps_api || globalContext.get('ps_api'),
 				done: function(result, err) {
