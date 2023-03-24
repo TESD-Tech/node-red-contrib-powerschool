@@ -159,7 +159,7 @@ module.exports = function(RED) {
 		this.on('input', function (msg) {
 			const request = {
 				url: n.url || msg.url,
-				method: n.method || msg.method,
+				method: n.method || msg.method || 'POST',
 				fk: n.fk || msg.fk,
 				data: msg.payload || {},
 				ps_api: msg.ps_api || globalContext.get('ps_api'),
