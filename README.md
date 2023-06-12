@@ -2,6 +2,8 @@
 
 A set of nodes which connect to and interact with the PowerSchool API.
 
+## THIS IS A WORK IN PROGRESS AND SHOULD BE CONSIDERED AN ALPHA RELEASE
+
 ## Installation
 
 `pnpm install @tesd-tech/node-red-contrib-powerschool`
