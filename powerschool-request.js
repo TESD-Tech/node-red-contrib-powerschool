@@ -78,7 +78,7 @@ _internals.sendRequest = function ( request ) {
 	let this_request = {
 		headers: {
 			"Authorization": "Bearer " + request.ps_api.access_token,
-			"Content-Type": "application/json",
+			"Content-Type": "application/json; charset=utf-8",
 			"Accept": "application/json"
 		},
 		method: request.method ?? 'POST',
