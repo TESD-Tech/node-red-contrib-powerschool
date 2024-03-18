@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   axios:
-    specifier: ^1.6.7
+    specifier: ^1.6.8
     version: 1.6.8
 
 packages:
