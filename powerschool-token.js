@@ -101,8 +101,8 @@ module.exports = function(RED) {
 						return;
 					}
 
-					if ( result.status === 200 ) {
-						msg.ps_token = result.data
+					if ( 1 === 1 ) {
+						msg.ps_token = result
 						msg.ps_token.host = props.host
 						msg.ps_token.ssl_reject = props.ssl_reject
 
