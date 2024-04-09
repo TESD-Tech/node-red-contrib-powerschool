@@ -18,13 +18,12 @@ _internals.getToken = function (props, cb) {
 
     instance.post(
         'https://' + props.host + '/oauth/access_token',
-        null,
+        "grant_type=client_credentials",
         {
             headers: {
                 "Authorization": "Basic " + ps_hash,
 								"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-            },
-						data: "grant_type=client_credentials"
+            }
         }
 
     ).then(response => {
