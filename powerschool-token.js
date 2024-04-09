@@ -30,8 +30,7 @@ _internals.getToken = function (props, cb) {
     ).then(response => {
       cb(response.data, null);
     }).catch(error => {
-			node.warn(props)
-      cb(null, error);
+      cb(null, {error: error, props: props});
     });
 };
 
@@ -97,7 +96,7 @@ module.exports = function(RED) {
 				node.warn( 'Generating New PS API Token' );
 
 				_internals.getToken( props, function(result, error){
-					if ( error ) {
+					if ( error?.error ) {
 						node.status({ fill: 'red', shape: 'dot', text: error })
 						node.error( error );
 						return;
