@@ -96,6 +96,7 @@ module.exports = function(RED) {
 				node.warn( 'Generating New PS API Token' );
 
 				_internals.getToken( props, function(error, result){
+					node.warn(result)
 					if ( result.status === 200 ) {
 						msg.ps_token = result.data
 						msg.ps_token.host = props.host
