@@ -101,6 +101,8 @@ module.exports = function(RED) {
 						return;
 					}
 
+					node.error(`Result: ${result}`)
+
 					if ( 1 === 1 ) {
 						msg.ps_token = result
 						msg.ps_token.host = props.host
