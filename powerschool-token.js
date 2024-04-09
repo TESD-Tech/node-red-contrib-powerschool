@@ -112,7 +112,7 @@ module.exports = function(RED) {
 						globalContext.set( 'ps_api', msg.ps_token )
 
 					} else {
-						node.error( result );
+						node.error( JSON.stringify(result) );
 					}
 					node.send(msg);
 				});
