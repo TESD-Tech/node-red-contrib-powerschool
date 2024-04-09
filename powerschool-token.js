@@ -1,9 +1,6 @@
 const axios = require( 'axios' );
 const https = require( 'https' );
 
-const dotenv = require( 'dotenv' );
-dotenv.config();
-
 var _internals = {};
 
 _internals.getToken = function (props, cb) {
@@ -25,8 +22,11 @@ _internals.getToken = function (props, cb) {
         {
             headers: {
                 "Authorization": "Basic " + ps_hash,
-            }
+								"Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+						data: "grant_type=client_credentials"
         }
+
     ).then(response => {
       cb(response.data, null);
     }).catch(error => {
