@@ -28,11 +28,8 @@ _internals.getToken = function (props, cb) {
             }
         }
     ).then(response => {
-			node.warn(response)
       cb(null, response.data);
     }).catch(error => {
-			node.warn(response)
-			node.warn( error	)
       cb(error);
     });
 };
