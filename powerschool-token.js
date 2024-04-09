@@ -28,9 +28,12 @@ _internals.getToken = function (props, cb) {
             }
         }
     ).then(response => {
-        cb(null, response.data);
+			node.warn(response)
+      cb(null, response.data);
     }).catch(error => {
-        cb(error);
+			node.warn(response)
+			node.warn( error	)
+      cb(error);
     });
 };
 
@@ -96,9 +99,6 @@ module.exports = function(RED) {
 				node.warn( 'Generating New PS API Token' );
 
 				_internals.getToken( props, function(error, result){
-					node.warn(error)
-					node.warn(result)
-
 					if ( result.status === 200 ) {
 						msg.ps_token = result.data
 						msg.ps_token.host = props.host
