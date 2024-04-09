@@ -33,6 +33,7 @@ _internals.getToken = function (props, cb) {
 	).then((response) => {
 		cb( response )
 	}).catch((error) => {
+		console.log( error)
 		cb( error )
 	})
 	
@@ -55,9 +56,9 @@ module.exports = function(RED) {
 
 			// Retrieve the node's properties
 			const props = {
-				client: n.client,
-				secret: n.secret,
-				host: n.host,
+				client: n.client ?? process.env.POWERSCHOOL_CLIENT_ID,
+				secret: n.secret ?? process.env.POWERSCHOOL_CLIENT_SECRET,
+				host: n.host ?? process.env.POWERSCHOOL_HOST,
 				ssl_reject: (n.ssl_reject == 'true')
 			}
 
