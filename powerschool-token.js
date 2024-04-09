@@ -7,36 +7,31 @@ dotenv.config();
 var _internals = {};
 
 _internals.getToken = function (props, cb) {
+    const instance = axios.create({
+        httpsAgent: new https.Agent({  
+            rejectUnauthorized: props.ssl_reject
+        })
+    });
+    
+    const ps_hash = (new Buffer.from(
+        props.client
+        + ":" 
+        + props.secret
+    )).toString('base64');
 
-	const instance = axios.create({
-		httpsAgent: new https.Agent({  
-			rejectUnauthorized: props.ssl_reject
-		})
-	});
-	
-	const ps_hash = (new Buffer.from(
-		props.client
-		+ ":" 
-		+ props.secret
-	)).toString('base64');
-
-	instance.post(
-		'https://' + props.host + '/oauth/access_token',
-		null,
-		{
-			headers: {
-				"Authorization": "Basic " + ps_hash,
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			params: { "grant_type": "client_credentials" }
-		}
-	).then((response) => {
-		cb( response )
-	}).catch((error) => {
-		console.log( error)
-		cb( error )
-	})
-	
+    instance.post(
+        'https://' + props.host + '/oauth/access_token',
+        null,
+        {
+            headers: {
+                "Authorization": "Basic " + ps_hash,
+            }
+        }
+    ).then(response => {
+        cb(null, response.data);
+    }).catch(error => {
+        cb(error);
+    });
 };
 
 module.exports = function(RED) {
