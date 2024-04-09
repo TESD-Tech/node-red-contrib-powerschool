@@ -1,6 +1,9 @@
 const axios = require( 'axios' );
 const https = require( 'https' );
 
+const dotenv = require( 'dotenv' );
+dotenv.config();
+
 var _internals = {};
 
 _internals.getToken = function (props, cb) {
