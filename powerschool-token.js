@@ -97,7 +97,7 @@ module.exports = function(RED) {
 
 				_internals.getToken( props, function(result, error){
 					if ( error?.error ) {
-						node.status({ fill: 'red', shape: 'dot', text: error })
+						node.status({ fill: 'red', shape: 'dot', text: JSON.stringify(error) })
 						node.error( error );
 						return;
 					}
