@@ -108,7 +108,7 @@ module.exports = function(RED) {
 
 						msg.ps_token.expires = new Date()
 						msg.ps_token.expires.setSeconds( msg.ps_token.expires.getSeconds() + result.data.expires_in )
-
+						node.warn( 'Token Expires: ' + msg.ps_token.expires )
 						globalContext.set( 'ps_api', msg.ps_token )
 
 					} else {
