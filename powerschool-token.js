@@ -105,7 +105,7 @@ module.exports = function(RED) {
 
 					if ( 1 === 1 ) {
 						msg.ps_token = result
-						msg.ps_token.host = props.host
+						msg.ps_token.host = props.host ?? ''
 						msg.ps_token.ssl_reject = props.ssl_reject
 
 						msg.ps_token.expires = new Date()
