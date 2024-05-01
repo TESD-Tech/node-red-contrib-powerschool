@@ -103,6 +103,10 @@ module.exports = function(RED) {
 
 					// node.error(`Result: ${JSON.stringify(result)}`)
 
+					if (!msg.hasOwnProperty('ps_token')) {
+						msg.ps_token = {};
+					}
+
 					if ( msg.hasOwnProperty('ps_token') ) {
 						msg.ps_token = result
 						msg.ps_token.host = props.host
