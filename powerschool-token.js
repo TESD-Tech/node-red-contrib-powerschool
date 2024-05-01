@@ -95,13 +95,13 @@ module.exports = function(RED) {
 				node.warn( 'Generating New PS API Token' );
 
 				_internals.getToken( props, function(result, error){
-					if ( error?.error ) {
-						node.status({ fill: 'red', shape: 'dot', text: JSON.stringify(error) })
-						node.error( JSON.stringify(error) );
-						return;
-					}
+					// if ( error?.error ) {
+					// 	node.status({ fill: 'red', shape: 'dot', text: JSON.stringify(error) })
+					// 	node.error( JSON.stringify(error) );
+					// 	return;
+					// }
 
-					node.error(`Result: ${JSON.stringify(result)}`)
+					// node.error(`Result: ${JSON.stringify(result)}`)
 
 					if ( 1 === 1 ) {
 						msg.ps_token = result
