@@ -103,9 +103,9 @@ module.exports = function(RED) {
 
 					// node.error(`Result: ${JSON.stringify(result)}`)
 
-					if ( 1 === 1 ) {
+					if ( msg.hasOwnProperty('ps_token') ) {
 						msg.ps_token = result
-						msg.ps_token.host = props.host ?? ''
+						msg.ps_token.host = props.host
 						msg.ps_token.ssl_reject = props.ssl_reject
 
 						msg.ps_token.expires = new Date()
